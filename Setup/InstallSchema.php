@@ -86,7 +86,7 @@ class InstallSchema implements InstallSchemaInterface
                     'ip',
                     Table::TYPE_TEXT,
                     256,
-                    ['nullable' => false, 'default' => sha1('brandung :D')],
+                    ['nullable' => false],
                     'ip'
                 );
 
