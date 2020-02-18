@@ -1,5 +1,5 @@
 <?php
-namespace JonathanMartz\SupportForm\Controller\Adminhtml\Stats;
+namespace JonathanMartz\SupportForm\Controller\Adminhtml\SupportRequest;
 
 use Magento\Backend\App\Action;
 use Magento\Backend\App\Action\Context;
@@ -10,7 +10,7 @@ use Magento\Framework\View\Result\PageFactory;
 
 /**
  * Class Index
- * @package JonathanMartz\SupportForm\Controller\Adminhtml\Stats
+ * @package JonathanMartz\SupportForm\Controller\Adminhtml\SupportRequest
  */
 class Index extends Action
 {

@@ -5,7 +5,7 @@
         <add id="JonathanMartz_SupportForm::dashboard" title="Support" translate="title"
              module="JonathanMartz_SupportForm" parent="Magento_Backend::content" sortOrder="50"
              dependsOnModule="JonathanMartz_SupportForm" resource="JonathanMartz_SupportForm::dashboard"/>
-        <add id="JonathanMartz_SupportForm::overview" title="Stats" translate="title"
+        <add id="JonathanMartz_SupportForm::overview" title="SupportRequest" translate="title"
              module="JonathanMartz_SupportForm" parent="JonathanMartz_SupportForm::dashboard" sortOrder="10"
              dependsOnModule="JonathanMartz_SupportForm" action="supportrequest/overview"
              resource="JonathanMartz_SupportForm::overview"/>
