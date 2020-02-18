@@ -1,11 +1,13 @@
 <?xml version="1.0"?>
-<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="1column" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="1column"
+      xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
     <head>
+        <title>Support Request</title>
         <css src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/css/bootstrap.min.css" src_type="url"
              rel="stylesheet" type="text/css"/>
-        <script src="JonathanMartz_SupportForm::js/script.js"/>
     </head>
     <referenceContainer name="content">
-        <block class="JonathanMartz\SupportForm\Block\Index" name="supportrequest_index_index" template="JonathanMartz_SupportForm::index.phtml" />
+        <block class="JonathanMartz\SupportForm\Block\Index" name="supportrequest_index_index"
+               template="JonathanMartz_SupportForm::index.phtml"/>
     </referenceContainer>
 </page>

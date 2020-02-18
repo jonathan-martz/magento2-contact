@@ -4,8 +4,5 @@
         <route frontName="supportrequest" id="supportrequest">
             <module name="JonathanMartz_SupportForm"/>
         </route>
-        <route frontName="supportrequest_post" id="supportrequest_post">
-            <module name="JonathanMartz_SupportForm"/>
-        </route>
     </router>
 </config>

@@ -9,7 +9,7 @@ use Magento\Backend\Block\Template;
  * Class Chart
  * @package JonathanMartz\SupportForm\Block
  */
-class Overview extends Template
+class Post extends Template
 {
 
 }
