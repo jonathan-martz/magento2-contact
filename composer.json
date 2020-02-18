@@ -1,0 +1,19 @@
+{
+    "name": "jonathan-martz/magento2-supportform",
+    "description": "Support Form",
+    "authors":[{
+        "name": "Jonathan Martz",
+        "homepage": "https://www.jmartz.de"
+    }],
+    "require": {},
+    "type": "magento2-module",
+    "license": "MIT",
+    "autoload": {
+        "files": [
+            "registration.php"
+        ],
+        "psr-4": {
+            "JonathanMartz\\SupportForm\\": "."
+        }
+    }
+}
