@@ -1,11 +1,11 @@
 <?xml version="1.0" ?>
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Cron:etc/crontab.xsd">
     <group id="default">
-        <job instance="JonathanMartz\SupportForm\Cron\Clean" method="execute" name="supportrequest_clean">
-            <schedule>@daily</schedule>
+        <job instance="JonathanMartz\SupportForm\Cron\Clear" method="execute" name="supportrequest_clear">
+            <schedule>0 * * * *</schedule>
         </job>
         <job instance="JonathanMartz\SupportForm\Cron\Connect" method="execute" name="supportrequest_connect">
-            <schedule>@daily</schedule>
+            <schedule>* 0 * * *</schedule>
         </job>
     </group>
 </config>

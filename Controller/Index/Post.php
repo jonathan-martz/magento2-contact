@@ -2,6 +2,7 @@
 
 namespace JonathanMartz\SupportForm\Controller\Index;
 
+use JonathanMartz\SupportForm\Model\RequestFactory;
 use Magento\Framework\App\Action\Action;
 use Magento\Framework\App\Action\Context;
 use Magento\Framework\App\RequestInterface;
@@ -10,6 +11,7 @@ use Magento\Framework\Controller\Result\JsonFactory;
 use Magento\Framework\Controller\ResultFactory;
 use Magento\Framework\Controller\ResultInterface;
 use Magento\Framework\Data\Form\FormKey\Validator;
+use Magento\Framework\HTTP\PhpEnvironment\RemoteAddress;
 use Magento\Framework\Message\ManagerInterface;
 use Magento\Framework\UrlFactory;
 use Magento\Framework\UrlInterface;
@@ -21,10 +23,17 @@ use Magento\Framework\View\Result\PageFactory;
  */
 class Post extends Action
 {
+    private $remoteAddress;
+
     /**
      * @var PageFactory
      */
     protected $resultPageFactory;
+    /**
+     * @var RequestFactory
+     */
+    protected $supportrequest;
+
 
     /**
      * @var UrlFactory
@@ -53,6 +62,8 @@ class Post extends Action
      */
     private $request;
 
+    public $errors = [];
+
     /**
      * @param Context $context
      * @param PageFactory $resultPageFactory
@@ -69,7 +80,9 @@ class Post extends Action
         UrlFactory $urlFactory,
         ResultFactory $redirect,
         RequestInterface $request,
-        Validator $formKeyValidator
+        Validator $formKeyValidator,
+        RequestFactory $supportrequest,
+        RemoteAddress $remoteAddress
     ) {
         $this->resultPageFactory = $resultPageFactory;
         $this->resultJsonFactory = $resultJsonFactory;
@@ -78,6 +91,8 @@ class Post extends Action
         $this->resultRedirect = $redirect;
         $this->request = $request;
         $this->formKeyValidator = $formKeyValidator;
+        $this->supportrequest = $supportrequest;
+        $this->remoteAddress = $remoteAddress;
 
         parent::__construct($context);
     }
@@ -94,17 +109,21 @@ class Post extends Action
     public function validate(array $data)
     {
         $valid = true;
-        $error = [];
         $empty = ['botdetect'];
 
         if(!$this->formKeyValidator->validate($this->getRequest())) {
             $valid = false;
         }
 
+        if($data['agb'] !== 'on') {
+            $valid = false;
+            $this->errors[] = 'agb';
+        }
+
         foreach($data as $key => $value) {
             if(empty(trim($value))) {
                 $valid = false;
-                $error[] = $key;
+                $this->errors[] = $key;
             }
         }
 
@@ -122,9 +141,24 @@ class Post extends Action
 
         if($validate) {
             $this->messageManager->addSuccessMessage('Formular wurde erfolgreich übermittelt');
+
+            $ip = $this->remoteAddress->getRemoteAddress();
+
+            $model = $this->supportrequest->create();
+            $data = [
+                'type' => $post['type'],
+                'email' => $post['email'],
+                'message' => $post['message'],
+                'session' => $post['type'],
+                // 'agb' => $post['agb'],
+                'ip' => $ip,
+                'created_at' => time()
+            ];
+            $model->addData($data);
+            $saveData = $model->save();
         }
         else {
-            $this->messageManager->addErrorMessage('Form invalid: (' . implode($error) . ')');
+            $this->messageManager->addErrorMessage('Form invalid: (' . implode(', ', $this->errors) . ')');
         }
 
         $resultRedirect = $this->resultRedirect->create(ResultFactory::TYPE_REDIRECT);

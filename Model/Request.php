@@ -9,12 +9,9 @@ use Magento\Framework\Model\AbstractModel;
  */
 class Request extends AbstractModel
 {
-    /**
-     *
-     */
     public function _construct()
     {
-        $this->_init("JonathanMartz\SupportForm\Model\ResourceModel\Resource");
+        $this->_init('JonathanMartz\SupportForm\Model\Request');
     }
 }
 
