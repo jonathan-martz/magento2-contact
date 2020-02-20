@@ -17,6 +17,12 @@ class Overview extends Template
      */
     private $supportrequest;
 
+    /**
+     * Overview constructor.
+     * @param Template\Context $context
+     * @param array $data
+     * @param Collection $supportrequest
+     */
     public function __construct(
         Template\Context $context,
         array $data = [],
@@ -26,6 +32,9 @@ class Overview extends Template
         $this->supportrequest = $supportrequest;
     }
 
+    /**
+     * @return array
+     */
     public function getList(): array
     {
 

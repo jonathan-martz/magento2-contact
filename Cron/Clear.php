@@ -4,6 +4,10 @@ namespace JonathanMartz\SupportForm\Cron;
 
 use JonathanMartz\SupportForm\Model\ResourceModel\Collection;
 
+/**
+ * Class Clear
+ * @package JonathanMartz\SupportForm\Cron
+ */
 class Clear
 {
     /**
@@ -11,11 +15,18 @@ class Clear
      */
     private $supportrequest;
 
+    /**
+     * Clear constructor.
+     * @param Collection $supportrequest
+     */
     public function __construct(Collection $supportrequest)
     {
         $this->supportrequest = $supportrequest;
     }
 
+    /**
+     *
+     */
     public function execute()
     {
         $collection = $this->supportrequest;

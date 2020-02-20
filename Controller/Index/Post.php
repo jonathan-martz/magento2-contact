@@ -23,8 +23,10 @@ use Magento\Framework\View\Result\PageFactory;
  */
 class Post extends Action
 {
-    private $remoteAddress;
-
+    /**
+     * @var array
+     */
+    public $errors = [];
     /**
      * @var PageFactory
      */
@@ -50,6 +52,14 @@ class Post extends Action
      */
     protected $resultJsonFactory;
     /**
+     * @var Validator
+     */
+    protected $formKeyValidator;
+    /**
+     * @var RemoteAddress
+     */
+    private $remoteAddress;
+    /**
      * @var UrlInterface
      */
     private $urlModel;
@@ -61,8 +71,6 @@ class Post extends Action
      * @var RequestInterface
      */
     private $request;
-
-    public $errors = [];
 
     /**
      * @param Context $context
@@ -98,40 +106,6 @@ class Post extends Action
     }
 
     /**
-     * @var Validator
-     */
-    protected $formKeyValidator;
-
-    /**
-     * @param array $data
-     * @return bool
-     */
-    public function validate(array $data)
-    {
-        $valid = true;
-        $empty = ['botdetect'];
-
-        if(!$this->formKeyValidator->validate($this->getRequest())) {
-            $valid = false;
-        }
-
-        if($data['agb'] !== 'on') {
-            $valid = false;
-            $this->errors[] = 'agb';
-        }
-
-        foreach($data as $key => $value) {
-            if(empty(trim($value))) {
-                $valid = false;
-                $this->errors[] = $key;
-            }
-        }
-
-        return $valid;
-    }
-
-
-    /**
      * @return ResponseInterface|ResultInterface
      */
     public function execute()
@@ -165,5 +139,33 @@ class Post extends Action
         $resultRedirect->setUrl('/supportrequest');
 
         return $resultRedirect;
+    }
+
+    /**
+     * @param array $data
+     * @return bool
+     */
+    public function validate(array $data)
+    {
+        $valid = true;
+        $empty = ['botdetect'];
+
+        if(!$this->formKeyValidator->validate($this->getRequest())) {
+            $valid = false;
+        }
+
+        if($data['agb'] !== 'on') {
+            $valid = false;
+            $this->errors[] = 'agb';
+        }
+
+        foreach($data as $key => $value) {
+            if(empty(trim($value))) {
+                $valid = false;
+                $this->errors[] = $key;
+            }
+        }
+
+        return $valid;
     }
 }

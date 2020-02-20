@@ -6,7 +6,7 @@ use JonathanMartz\SupportForm\Model\ResourceModel\CollectionFactory;
 use Magento\Backend\Block\Template;
 
 /**
- * Class Chart
+ * Class Post
  * @package JonathanMartz\SupportForm\Block
  */
 class Post extends Template

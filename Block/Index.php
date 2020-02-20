@@ -1,5 +1,7 @@
 <?php
+
 namespace JonathanMartz\SupportForm\Block;
+
 use Magento\Backend\Block\Widget\Context;
 use Magento\Framework\Data\Form\FormKey;
 use Magento\Framework\Exception\LocalizedException;
