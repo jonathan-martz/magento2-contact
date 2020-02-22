@@ -14,7 +14,7 @@ class Request extends AbstractModel
      */
     public function _construct()
     {
-        $this->_init('JonathanMartz\SupportForm\Model\Request');
+        $this->_init('JonathanMartz\SupportForm\Model\ResourceModel\Resource');
     }
 }
 

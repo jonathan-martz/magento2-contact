@@ -8,5 +8,8 @@
         <job instance="JonathanMartz\SupportForm\Cron\Connect" method="execute" name="supportrequest_connect">
             <schedule>0 * * * *</schedule>
         </job>
+        <job instance="JonathanMartz\SupportForm\Cron\FixType" method="execute" name="supportrequest_fixtype">
+            <schedule>0 * * * *</schedule>
+        </job>
     </group>
 </config>

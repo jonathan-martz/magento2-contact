@@ -2,9 +2,11 @@
 
 namespace JonathanMartz\SupportForm\Cron;
 
+use Exception;
 use JonathanMartz\SupportForm\Model\RequestFactory;
-use JonathanMartz\SupportForm\Model\RequestRepository;
-use JonathanMartz\SupportForm\Model\ResourceModel\Collection;
+use JonathanMartz\SupportForm\Model\ResourceModel\CollectionFactory;
+use Magento\Customer\Api\CustomerRepositoryInterface;
+
 
 /**
  * Class Clear
@@ -13,25 +15,31 @@ use JonathanMartz\SupportForm\Model\ResourceModel\Collection;
 class Clear
 {
     /**
-     * @var Collection
+     * @var CollectionFactory
      */
     private $supportrequest;
     private $requestFactory;
     /**
-     * @var RequestRepository
+     * @var CustomerRepositoryInterface
      */
-    private $requestRepository;
+    private $customerRepository;
 
 
     /**
      * Clear constructor.
-     * @param Collection $supportrequest
+     * @param CollectionFactory $supportrequest
+     * @param RequestFactory $requestFactory
+     * @param CustomerRepositoryInterface $customerRepository
+     * @param ScopeConfigInterface $scopeConfig
      */
-    public function __construct(Collection $supportrequest, RequestFactory $requestFactory, RequestRepository $requestRepository)
-    {
+    public function __construct(
+        CollectionFactory $supportrequest,
+        RequestFactory $requestFactory,
+        CustomerRepositoryInterface $customerRepository
+    ) {
         $this->supportrequest = $supportrequest;
         $this->requestFactory = $requestFactory;
-        $this->requestRepository = $requestRepository;
+        $this->customerRepository = $customerRepository;
     }
 
     /**
@@ -39,20 +47,19 @@ class Clear
      */
     public function execute()
     {
-        $collection = $this->supportrequest;
-        $collection->addFieldToFilter('customer_id', ['eq' => null]);
-        $reqeusts = $collection->getData();
+        $collection = $this->supportrequest->create();
+        $collection->addFieldToFilter('customer_id', ['neq' => null])->setPageSize(10)->setCurPage(1);
+        $requests = $collection->getItems();
 
-        if(count($reqeusts) > 0) {
-            foreach($reqeusts as $reqeust) {
-                var_dump($reqeust);
+        if(count($requests) > 0) {
+            foreach($requests as $id => $model) {
 
-                var_dump(get_class($this->requestRepository));
-
-                // $modelUpdate->setData();
-                // $modelUpdate->save();
-
-                die();
+                try {
+                    $this->customerRepository->get($model->getData('email'), 1);
+                }
+                catch(Exception $e) {
+                    $model->delete();
+                }
             }
         }
     }

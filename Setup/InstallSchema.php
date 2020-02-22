@@ -49,6 +49,14 @@ class InstallSchema implements InstallSchemaInterface
                     ['nullable' => false, 'default' => ''],
                     'type'
                 );
+                $table->addColumn(
+                    'agb',
+                    Table::TYPE_TEXT,
+                    5,
+                    ['nullable' => false, 'default' => ''],
+                    'agb'
+                );
+
 
                 $table->addColumn(
                     'email',
@@ -95,15 +103,15 @@ class InstallSchema implements InstallSchemaInterface
                     Table::TYPE_INTEGER,
                     30,
                     ['nullable' => false, 'default' => time()],
-                    'Time'
+                    'Created'
                 );
 
                 $table->addColumn(
                     'updated_at',
                     Table::TYPE_INTEGER,
                     30,
-                    ['nullable' => false, 'default' => time()],
-                    'Time'
+                    ['nullable' => true],
+                    'Updated'
                 );
 
                 $connection->createTable($table);

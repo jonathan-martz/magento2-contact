@@ -5,6 +5,7 @@ namespace JonathanMartz\SupportForm\Controller\Index;
 use JonathanMartz\SupportForm\Model\RequestFactory;
 use Magento\Framework\App\Action\Action;
 use Magento\Framework\App\Action\Context;
+use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\App\RequestInterface;
 use Magento\Framework\App\ResponseInterface;
 use Magento\Framework\Controller\Result\JsonFactory;
@@ -16,6 +17,7 @@ use Magento\Framework\Message\ManagerInterface;
 use Magento\Framework\UrlFactory;
 use Magento\Framework\UrlInterface;
 use Magento\Framework\View\Result\PageFactory;
+use Magento\Store\Model\ScopeInterface;
 
 /**
  * Class Post
@@ -71,6 +73,10 @@ class Post extends Action
      * @var RequestInterface
      */
     private $request;
+    /**
+     * @var ScopeConfigInterface
+     */
+    private $scopeConfig;
 
     /**
      * @param Context $context
@@ -78,7 +84,12 @@ class Post extends Action
      * @param JsonFactory $resultJsonFactory
      * @param ManagerInterface $messageManager
      * @param UrlFactory $urlFactory
-     * @param ResultFactory $result
+     * @param ResultFactory $redirect
+     * @param RequestInterface $request
+     * @param Validator $formKeyValidator
+     * @param RequestFactory $supportrequest
+     * @param RemoteAddress $remoteAddress
+     * @param ScopeConfigInterface $scopeConfig
      */
     public function __construct(
         Context $context,
@@ -90,7 +101,8 @@ class Post extends Action
         RequestInterface $request,
         Validator $formKeyValidator,
         RequestFactory $supportrequest,
-        RemoteAddress $remoteAddress
+        RemoteAddress $remoteAddress,
+        ScopeConfigInterface $scopeConfig
     ) {
         $this->resultPageFactory = $resultPageFactory;
         $this->resultJsonFactory = $resultJsonFactory;
@@ -101,6 +113,8 @@ class Post extends Action
         $this->formKeyValidator = $formKeyValidator;
         $this->supportrequest = $supportrequest;
         $this->remoteAddress = $remoteAddress;
+        $this->scopeConfig = $scopeConfig;
+
 
         parent::__construct($context);
     }
@@ -124,8 +138,8 @@ class Post extends Action
                 'email' => $post['email'],
                 'message' => $post['message'],
                 'session' => $post['type'],
-                // 'agb' => $post['agb'],
-                'ip' => $ip,
+                'agb' => $post['agb'],
+                'ip' => sha1($ip),
                 'created_at' => time()
             ];
             $model->addData($data);
@@ -152,6 +166,15 @@ class Post extends Action
 
         if(!$this->formKeyValidator->validate($this->getRequest())) {
             $valid = false;
+        }
+
+        $configTypes = $this->scopeConfig->getValue('supportrequest/general/type', ScopeInterface::SCOPE_STORE);
+
+        $types = explode(',', $configTypes);
+
+        if(count($types) > 0) {
+            $valid = false;
+            $this->errors[] = 'type';
         }
 
         if($data['agb'] !== 'on') {

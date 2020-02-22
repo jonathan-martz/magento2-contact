@@ -6,6 +6,11 @@
                 <div class="form-group">
                     <label>Type</label>
                     <select name="type" class="form-control field-type">
+                        <?php var_dump($block->getPostUrl()); ?>
+                        <?php foreach($block->getTypes() as $key): ?>
+                            <?php var_dump($key); ?>
+                        <?php endforeach; ?>
+
                         <option value="general">Anfrage</option>
                         <option value="tech">Technische Anfrage</option>
                     </select>
