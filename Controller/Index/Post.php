@@ -143,7 +143,8 @@ class Post extends Action
                 'created_at' => time()
             ];
             $model->addData($data);
-            $saveData = $model->save();
+            // @todo replace
+            $model->save();
         }
         else {
             $this->messageManager->addErrorMessage('Form invalid: (' . implode(', ', $this->errors) . ')');
@@ -161,18 +162,17 @@ class Post extends Action
      */
     public function validate(array $data)
     {
+        $configTypes = $this->scopeConfig->getValue('supportrequest/general/type', ScopeInterface::SCOPE_STORE);
         $valid = true;
-        $empty = ['botdetect'];
 
         if(!$this->formKeyValidator->validate($this->getRequest())) {
             $valid = false;
+            $this->errors[] = 'formkey';
         }
-
-        $configTypes = $this->scopeConfig->getValue('supportrequest/general/type', ScopeInterface::SCOPE_STORE);
 
         $types = explode(',', $configTypes);
 
-        if(count($types) > 0) {
+        if(array_search(strtolower($data['type']), $types) === false) {
             $valid = false;
             $this->errors[] = 'type';
         }

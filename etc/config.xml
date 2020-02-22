@@ -4,7 +4,7 @@
         <supportrequest>
             <general>
                 <enable>1</enable>
-                <type>General,Techical</type>
+                <type>general,technical</type>
             </general>
         </supportrequest>
     </default>
