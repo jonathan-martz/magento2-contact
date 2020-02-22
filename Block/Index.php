@@ -66,6 +66,9 @@ class Index extends Template
         return $this->formKey->getFormKey();
     }
 
+    /**
+     * @return array
+     */
     public function getTypes(): array
     {
         $configTypes = $this->scopeConfig->getValue('supportrequest/general/type', ScopeInterface::SCOPE_STORE);

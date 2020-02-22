@@ -18,6 +18,9 @@ class Clear
      * @var CollectionFactory
      */
     private $supportrequest;
+    /**
+     * @var RequestFactory
+     */
     private $requestFactory;
     /**
      * @var CustomerRepositoryInterface

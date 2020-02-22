@@ -18,9 +18,18 @@ class Overview extends Template
      */
     private $supportrequest;
 
+    /**
+     * @var Session
+     */
     private $customerSession;
 
-
+    /**
+     * Overview constructor.
+     * @param Template\Context $context
+     * @param Collection $supportrequest
+     * @param Session $customerSession
+     * @param array $data
+     */
     public function __construct(
         Template\Context $context,
         Collection $supportrequest,

@@ -8,10 +8,6 @@ namespace JonathanMartz\SupportForm\Cron;
  */
 class FixType
 {
-    public function __construct()
-    {
-    }
-
     /**
      *
      */
