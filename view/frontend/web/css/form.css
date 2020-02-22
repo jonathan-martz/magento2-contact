@@ -1,0 +1,64 @@
+.form-contact {
+    margin: 25px auto 100px auto;
+    max-width: 400px;
+}
+
+.form-group {
+    display: block;
+}
+
+.form-group > label {
+    display: block;
+    padding: 5px 10px;
+    margin-top: 20px;
+}
+
+select {
+    border: 1px solid black;
+    border-radius: 0;
+}
+
+input[type="email"], input[type="text"], select, textarea {
+    border: 1px solid black;
+    border-radius: 0;
+}
+
+input[type="checkbox"] {
+    border: 1px solid red;
+    border-radius: 0;
+    background-color: red;
+    padding: 5px 10px;
+    margin-top: 20px;
+}
+
+input {
+
+}
+
+.float-left {
+    float: left;
+}
+
+.float-right {
+    float: right;
+}
+
+.btn {
+    border: 1px solid black;
+    border-radius: 0;
+    background-color: lavender;
+}
+
+.btn.btn-primary {
+    border: 1px solid black;
+    border-radius: 0;
+    background-color: lavender;
+    color: black;
+}
+
+.btn.btn-secondary {
+    border: 1px solid black;
+    border-radius: 0;
+    background-color: white;
+    color: red;
+}

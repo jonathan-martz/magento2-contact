@@ -5,6 +5,7 @@ namespace JonathanMartz\SupportForm\Block;
 use JonathanMartz\SupportForm\Model\ResourceModel\Collection;
 use JonathanMartz\SupportForm\Model\ResourceModel\CollectionFactory;
 use Magento\Backend\Block\Template;
+use Magento\Customer\Model\Session;
 
 /**
  * Class Overview
@@ -17,19 +18,18 @@ class Overview extends Template
      */
     private $supportrequest;
 
-    /**
-     * Overview constructor.
-     * @param Template\Context $context
-     * @param array $data
-     * @param Collection $supportrequest
-     */
+    private $customerSession;
+
+
     public function __construct(
         Template\Context $context,
-        array $data = [],
-        Collection $supportrequest
+        Collection $supportrequest,
+        Session $customerSession,
+        array $data = []
     ) {
         parent::__construct($context, $data);
         $this->supportrequest = $supportrequest;
+        $this->customerSession = $customerSession;
     }
 
     /**
@@ -37,10 +37,14 @@ class Overview extends Template
      */
     public function getList(): array
     {
+        // @todo fix customer session bug ?
+        $customer = $this->customerSession->getCustomer();
+        if($customer) {
+            $collection = $this->supportrequest;
+            $collection->addFieldToFilter('customer_id', ['eq' => $customer->getId()]);
+            return $collection->getData();
+        }
 
-        $collection = $this->supportrequest;
-        $collection->addFieldToFilter('customer_id', ['neq' => '']);
-
-        return $collection->getData();
+        return [];
     }
 }

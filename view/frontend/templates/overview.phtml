@@ -1,4 +1,21 @@
-<?php
-var_dump($block->getList());
-?>
-<span> My Custom Tab.. </span>
+<?php $list = $block->getList(); ?>
+<table class="table">
+    <tr>
+        <th>Type</th>
+        <th>Message</th>
+        <th>Created</th>
+    </tr>
+    <?php if(count($list) < 1): ?>
+        <tr>
+            <td colspan="3" style="text-align: center">No Request found.</td>
+        </tr>
+    <?php else: ?>
+        <?php foreach($list as $key => $value): ?>
+            <tr>
+                <td><?= $value['type'] ?></td>
+                <td><?= $value['message'] ?></td>
+                <td><?= $value['created_at'] ?></td>
+            </tr>
+        <?php endforeach; ?>
+    <?php endif; ?>
+</table>

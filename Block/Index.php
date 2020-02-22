@@ -68,7 +68,6 @@ class Index extends Template
 
     public function getTypes(): array
     {
-        var_dump('hallo');
         $configTypes = $this->scopeConfig->getValue('supportrequest/general/type', ScopeInterface::SCOPE_STORE);
 
         $types = explode(',', $configTypes);
