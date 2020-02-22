@@ -3,10 +3,10 @@
         xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Cron:etc/crontab.xsd">
     <group id="default">
         <job instance="JonathanMartz\SupportForm\Cron\Clear" method="execute" name="supportrequest_clear">
-            <schedule>0 * * * *</schedule>
+            <schedule>* 0 * * *</schedule>
         </job>
         <job instance="JonathanMartz\SupportForm\Cron\Connect" method="execute" name="supportrequest_connect">
-            <schedule>* 0 * * *</schedule>
+            <schedule>0 * * * *</schedule>
         </job>
     </group>
 </config>
